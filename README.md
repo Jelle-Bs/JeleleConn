@@ -1,6 +1,6 @@
 # JeleleConn
 ### Smooth sql query handler
-#####Use this class if you want an easier way to execute and get results for SQL based Databases.
+##### Use this class if you want an easier way to execute and get results for SQL based Databases.
 - Using mysqli and stmt, for a secure query.
 - Separate ini file for default db credential and settings.
 - Possibility for object specific user, db or server!
@@ -9,9 +9,9 @@
 - Or query() to have your own processing.
 - Throws error when your query is not sql correct (with details).
 
-> this is an product of [Jeleleforest](https://jeleleforest.nl)
+> this is an product of [Jeleleforest](https://jeleleforest.nl?english)
 
-####Functions
+#### Functions
 - conn() -> returns a connection to you objects db
 - getCredentials() -> returns the allowed credential
 - query(query,paramTypes,paramValues) -> stmt save execution of query and bind_param
