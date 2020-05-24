@@ -32,5 +32,6 @@
     > for more information see [PHP.net/mysqli_stmt::bind_param](https://www.php.net/manual/en/mysqli-stmt.bind-param.php)
 
 - process(same arguments as query)
-  - Processes the query results in an array by select or affected_rows by INSERT, UPDATE, DELETE
-  > (or returns the query() results{mysqli_result or mysqli_stmt})
+  - Uses query() for the execution
+  - Processes the query() results in an array by select or affected_rows by INSERT, UPDATE, DELETE
+  > (or returns the query() results {mysqli_result or mysqli_stmt})
