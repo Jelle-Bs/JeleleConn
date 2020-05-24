@@ -14,12 +14,21 @@
 #### Functions
 - conn() -> returns a connection to you objects db
 - getCredentials() -> returns the allowed credential
-- query(query,paramTypes,paramValues) -> stmt save execution of query and bind_param
-                                       -> returns mysqli_result(if available) or mysqli_stmt
+- query(query,paramTypes,paramValues)
+  -> stmt save execution of query and bind_param
+  -> returns mysqli_result(if available) or mysqli_stmt
+
     - query: string with query (fist 6 letters contains sql action) (on variable place is a ?)
+    > example: SELECT * FROM User WHERE Email LIKE "%@gmail.com";
+
     - paramTypes: string with for every param the type ( i{int} , d{double}, s{string}, b{blob} )
+    > examples: "isd" for int, string double or "s" for only string
+
     - paramValues: string, int or array with the values (for the ? places) (array like = array(param1,param2,param3 ...))
+    > examples: array(13,"Daniel",4.20) or "Daniel"
+
     > for more information see [PHP.net/mysqli_stmt::bind_param](https://www.php.net/manual/en/mysqli-stmt.bind-param.php)
 
-- process(same arguments as query) -> Processes the query results in an array by select or affected_rows by INSERT, UPDATE, DELETE
-                                   -> (or returns the query() results{mysqli_result or mysqli_stmt})
+- process(same arguments as query)
+  -> Processes the query results in an array by select or affected_rows by INSERT, UPDATE, DELETE
+  -> (or returns the query() results{mysqli_result or mysqli_stmt})
