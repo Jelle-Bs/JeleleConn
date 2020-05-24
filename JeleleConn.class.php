@@ -5,7 +5,7 @@ class JeleleConn{
   private $username; // The user that will be used for the query
   private $password; // The  password the user
   private $dbname; // The name of the database
-  private $servername; // The adress of the database
+  private $servername; // The address of the database
   private const ini = "JeleleConn.ini"; // the path to the ini file
 
 
