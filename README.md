@@ -17,8 +17,8 @@
 - getCredentials()
   - returns the allowed credential
 - query(query,paramTypes,paramValues)
-  - stmt save execution of query and bind_param
-  - returns mysqli_result(if available) or mysqli_stmt
+  - stmt save execution of query using bind_param
+  - returns mysqli_result(if available) or mysqli_stmt object
 
     - query: string with query (fist 6 letters contains sql action) (on variable place is a ?)
     > example: "SELECT * FROM User WHERE Email LIKE '%@gmail.com'";
@@ -33,4 +33,4 @@
 
 - process(same arguments as query)
   - Processes the query results in an array by select or affected_rows by INSERT, UPDATE, DELETE
-  - (or returns the query() results{mysqli_result or mysqli_stmt})
+  > (or returns the query() results{mysqli_result or mysqli_stmt})
