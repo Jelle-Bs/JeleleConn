@@ -12,8 +12,10 @@
 > this is an product of [Jeleleforest](https://jeleleforest.nl?english)
 
 #### Functions
-- conn() -> returns a connection to you objects db
-- getCredentials() -> returns the allowed credential
+- conn()
+  - returns a connection to you objects db
+- getCredentials()
+  - returns the allowed credential
 - query(query,paramTypes,paramValues)
   - stmt save execution of query and bind_param
   - returns mysqli_result(if available) or mysqli_stmt
