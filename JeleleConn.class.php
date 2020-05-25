@@ -117,7 +117,7 @@ class JeleleConn{
           $rows = array();
           while($array = $result->fetch_assoc()){ $rows[] = $array;}
           if(!empty($rows)){ return $rows;} // checks if any data had come in
-          else{ $error = "$errorStart No data was availible for fetch";}
+          else{ return false;}
           break;
 
         case 'UPDATE'://falling through

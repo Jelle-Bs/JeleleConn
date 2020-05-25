@@ -8,6 +8,7 @@
 - Use process() to automatically get the result right from the query.
 - Or query() to have your own processing.
 - Throws error when your query is not sql correct (with details).
+- Returns false on SELECT resulting in no rows.
 
 > this is a product of [Jeleleforest](https://jeleleforest.nl?english)
 
@@ -33,5 +34,5 @@
 
 - process(same arguments as query)
   - Uses query() for the execution
-  - Processes the query() results in an array by select or affected_rows by INSERT, UPDATE, DELETE
+  - Processes the query() results and returns an array by select(false on zero rows) or affected_rows by INSERT, UPDATE, DELETE
   > (or returns the query() results {mysqli_result or mysqli_stmt})
