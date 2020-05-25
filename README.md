@@ -9,19 +9,19 @@
 - Or query() to have your own processing.
 - Throws error when your query is not sql correct (with details).
 
-> this is an product of [Jeleleforest](https://jeleleforest.nl?english)
+> this is a product of [Jeleleforest](https://jeleleforest.nl?english)
 
 #### Functions
 - conn()
-  - returns a connection to you objects db
+  - returns a connection to your objects db
 - getCredentials()
   - returns the allowed credential
-- query(query,paramTypes,paramValues)
-  - stmt save execution of query using bind_param
+- query(query, paramTypes, paramValues)
+  - stmt safe execution of query using bind_param
   - returns mysqli_result(if available) or mysqli_stmt object
 
     - query: string with query (fist 6 letters contains sql action) (on variable place is a ?)
-    > example: "SELECT * FROM User WHERE Email LIKE '%@gmail.com'";
+    > example: "SELECT * FROM User WHERE Email=?";
 
     - paramTypes: string with for every param the type ( i{int} , d{double}, s{string}, b{blob} )
     > examples: "isd" for int, string double or "s" for only string
