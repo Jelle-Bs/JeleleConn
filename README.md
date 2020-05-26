@@ -29,7 +29,7 @@
     > example: "SELECT * FROM User WHERE Email=?";
 
     - paramValues: string, int or array with the values (for the ? places) (array like = array(param1,param2,param3 ...))
-    - If no params are neede don't use this argument
+    - If no params are needed simply don't use this argument
     > examples: "mail@example" or array(13,"Daniel",4.20)
 
 - process(same arguments as query)
