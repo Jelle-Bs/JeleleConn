@@ -87,14 +87,14 @@ class JeleleConn{
       if(is_array($paramValues)){ // checks if one or more(array) of paramValues is given
         $i = 1;
         foreach ($paramValues as $param) { // adds the param to the $bind_param
-          $param = htmlspecialchars($param);
+          if($param != NULL){ $param = htmlspecialchars($param);}
           eval("\$param$i = \$param;");
           $bind_param .= ",\$param$i";
           $i++;
         }
       }
       else{ // adds the one param to the $bind_param
-        $param = htmlspecialchars($paramValues);
+        if($paramValues != NULL){ $param = htmlspecialchars($paramValues);}
         $bind_param .= ",\$param";
       }
       $bind_param .= ");"; // finishes $bind_param
