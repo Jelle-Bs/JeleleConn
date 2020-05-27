@@ -138,7 +138,7 @@ class JeleleConn{
         case 'DELETE': //falling through
         case 'INSERT': // if INSERT, UPDATE or DELETE get number of affected_rows
           if($rows = $result->affected_rows){ return $rows;}
-          else{ $error = "$errorStart No data on affected rows";}
+          else{ return false;}
           break;
 
         default: // keyword is not suporrted
