@@ -57,7 +57,7 @@ class JeleleConn{
 
     $QM = substr_count($query,"?"); // checks how many ? are in the query (should be nuber of params)
     if($QM > 0){ // checks if query needs paramValues
-      if($paramValues == "noparams" || empty($paramValues)){ // checks if any paramValues are given and if not empty
+      if($paramValues === "noparams" || empty($paramValues)){ // checks if any paramValues are given and if not empty
           $error = "Fatal error in jeleleConn->query Params are needed for the query but <b><u> None </b></u> are given";
           trigger_error($error);
           return $error;
@@ -87,7 +87,7 @@ class JeleleConn{
       if(is_array($paramValues)){ // checks if one or more(array) of paramValues is given
         $i = 1;
         foreach ($paramValues as $param) { // adds the param to the $bind_param
-          if($param != NULL){ $param = htmlspecialchars($param);}
+          if($param !== NULL){ $param = htmlspecialchars($param);}
           eval("\$param$i = \$param;");
           $bind_param .= ",\$param$i";
           $i++;
