@@ -37,4 +37,5 @@
   - Processes the query() results and returns an array by select(false on zero rows) or affected_rows by INSERT, UPDATE, DELETE
   > SELECT array like array(0=> array(1strow), 1=> array(2ndrow), 3=> array(3rdrow), ...)
   > row arrays are a mysqli associative array (constructed with SELECT fields)
-  > (or returns the query() results {mysqli_result or mysqli_stmt})
+
+  > (or returns the query() results {mysqli_result or mysqli_stmt} on error)
