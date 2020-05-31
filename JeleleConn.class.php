@@ -36,38 +36,30 @@ class JeleleConn{
       return (!empty($return) ? $return :"You are not allowed to get any credentials, this is restricted in the JeleleConn.ini" );
   }
 
-  public function getTypes($paramValues){// this returns the types of the paramValues passed in (for stmt->bind_param)
+  public function getTypes(...$paramValues){// this returns the types of the paramValues passed in (for stmt->bind_param)
     $paramTypes = "";
-    if(is_array($paramValues)){// checks if input is array and then executes the function for each item in the array
-      foreach ($paramValues as $key => $value) {
-        $paramTypes .= $this->getTypes($value);
-      }
-    }
-    else{ // adds paramTypes to the return string
-      if(is_int($paramValues)){ $paramTypes .= "i";}
-      elseif(is_string($paramValues)){ $paramTypes .= "s";}
-      elseif(is_double($paramValues)){ $paramTypes .= "d";}
+    foreach ($paramValues as $param) { // does for every given param a type check
+      if(is_int($param) || is_bool($param)){ $paramTypes .= "i";}
+      elseif(is_string($param)){ $paramTypes .= "s";}
+      elseif(is_double($param)){ $paramTypes .= "d";}
       else{ $paramTypes .= "b";}
     }
     return $paramTypes;
   }
 
-
-  public function query($query, $paramValues = "noparams"){//executes a stmt query and returns mysqli_stmt or if availible mysqli_result (or error)
+  public function query($query, ...$paramValues){//executes a stmt query and returns mysqli_stmt or if availible mysqli_result (or error)
 
     $QM = substr_count($query,"?"); // checks how many ? are in the query (should be nuber of params)
-    if($QM > 0){ // checks if query needs paramValues
-      if($paramValues === "noparams" || empty($paramValues)){ // checks if any paramValues are given and if not empty
-          $error = "Fatal error in jeleleConn->query Params are needed for the query but <b><u> None </b></u> are given";
+    if($QM != count($paramValues)){ // checks ? and parammeters match count
+      if(count($paramValues) > $QM){ // too many params error
+          $error = "Fatal error in jeleleConn->query too <b><u>many</u></b> number of params are given";
           trigger_error($error);
           return $error;
       }
-      else{ // checks if right number of params are given
-        if(!(($QM == 1 && (!is_array($paramValues) || count($paramValues) == 1)) || (is_array($paramValues) && $QM == count($paramValues)))){
-          $error = "Fatal error in jeleleConn->query <b><u>Wrong</u></b> number of params are given";
-          trigger_error($error);
-          return $error;
-        }
+      elseif(count($paramValues) < $QM){ // too  few many params error
+        $error = "Fatal error in jeleleConn->query too <b><u>few</u></b> number of params are given";
+        trigger_error($error);
+        return $error;
       }
     }
 
@@ -80,25 +72,9 @@ class JeleleConn{
       trigger_error($error);
       return $error;
     }
-
     if($QM > 0){ // checks if params are needed
-      $paramTypes = $this->getTypes($paramValues); // gets the paramTypes associated with the paramTypes
-      $bind_param = "\$stmt->bind_param('$paramTypes'"; //start of $bind_param
-      if(is_array($paramValues)){ // checks if one or more(array) of paramValues is given
-        $i = 1;
-        foreach ($paramValues as $param) { // adds the param to the $bind_param
-          if($param !== NULL){ $param = htmlspecialchars($param);}
-          eval("\$param$i = \$param;");
-          $bind_param .= ",\$param$i";
-          $i++;
-        }
-      }
-      else{ // adds the one param to the $bind_param
-        if($paramValues != NULL){ $param = htmlspecialchars($paramValues);}
-        $bind_param .= ",\$param";
-      }
-      $bind_param .= ");"; // finishes $bind_param
-      eval($bind_param); // binds params
+      $paramTypes = $this->getTypes(...$paramValues); // gets the paramTypes associated with the paramTypes
+      $stmt->bind_param($paramTypes,...$paramValues); // binds the params to the query
     }
 
     if($result = $stmt->execute()){ // executes query
@@ -119,10 +95,10 @@ class JeleleConn{
     }
   }
 
-  public function process($query, $paramValues = "noparams"){// this function will execute $this->query() and process the data gives array result of SELECT or affected_rows of UPDATE INSERT or DELETE (or returns $this->query result on error)
+  public function process($query, ...$paramValues){// this function will execute $this->query() and process the data gives array result of SELECT or affected_rows of UPDATE INSERT or DELETE (or returns $this->query result on error)
 
     $errorStart = "Fatal error in jeleleConn->process"; // defines start of error
-    $result = $this->query($query,$paramValues); // executes query
+    $result = $this->query($query,...$paramValues); // executes query
 
     if(is_a($result,"mysqli_stmt") || is_a($result,"mysqli_result")){//check no error is given from $this->query so the next actions can be done
       $action = substr($query,0,6); // first sql keyword to define what kind of result is needed
