@@ -12,6 +12,7 @@
 - Throws error when your query is not sql correct (with details).
 - Returns false on SELECT resulting in no rows.
 - Turns boolean true or false into 1 or 0.
+> backwards compatible with last stable versions
 
 > this is a product of [Jeleleforest](https://jeleleforest.nl?english)
 
