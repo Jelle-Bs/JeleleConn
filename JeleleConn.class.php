@@ -17,16 +17,16 @@ class JeleleConn{
     $this->servername = ($servername == NULL ? $config["servername"] : $servername);
   }
 
-  public function conn(){//creates a mysqli connection to this objects credentials
+  public function conn(){//creates a mysqli connection with this objects credentials
     return new mysqli($this->servername, $this->username, $this->password, $this->dbname);
   }
 
   public function getCredentials(){//this returns if JeleleConn.ini allows it to get these credential in an array
     $config = parse_ini_file(self::ini,true)["settings"];
-    if($config["AllowCredentialsRequest"]){// return all
+    if($config["AllowCredentialsRequest"]){// return all credentials
       $return = array("username" => $this->username, "password" => $this->password, "dbname" => $this->dbname, "servername" => $this->servername);
     }
-    else{ // return all those that are allowed
+    else{ // return all credentials that are allowed
       $return = array();
       if($config["AllowUsernameRequest"])  { $return["username"] = $this->username;}
       if($config["AllowPasswordRequest"])  { $return["password"] = $this->password;}
@@ -50,13 +50,14 @@ class JeleleConn{
   public function query($query, ...$paramValues){//executes a stmt query and returns mysqli_stmt or if availible mysqli_result (or error)
 
     $QM = substr_count($query,"?"); // checks how many ? are in the query (should be nuber of params)
-    if($QM != count($paramValues)){ // checks ? and parammeters match count
-      if(count($paramValues) > $QM){ // too many params error
+    $paramCount = count($paramValues); // counts number of params that were given
+    if($QM != $paramCount){ // checks ? and parammeters match count
+      if($paramCount > $QM){ // too many params error
           $error = "Fatal error in jeleleConn->query too <b><u>many</u></b> number of params are given";
           trigger_error($error);
           return $error;
       }
-      elseif(count($paramValues) < $QM){ // too  few many params error
+      elseif($paramCount < $QM){ // too few params error
         $error = "Fatal error in jeleleConn->query too <b><u>few</u></b> number of params are given";
         trigger_error($error);
         return $error;
